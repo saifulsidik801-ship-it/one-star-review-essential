@@ -12,10 +12,17 @@ REVIEW = (
     "and four dollars everywhere I am."
 )
 
+# The gate allows 1 to 160 characters of UTF-8 text, not only white space.
+MAX_CHARS = 160
+
 OUTPUT_PATH = "/output/entry.txt"
 
 
 def main() -> None:
+    if not REVIEW.strip() or len(REVIEW) > MAX_CHARS:
+        raise SystemExit(
+            f"review must be 1-{MAX_CHARS} characters, got {len(REVIEW)}"
+        )
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(REVIEW)
